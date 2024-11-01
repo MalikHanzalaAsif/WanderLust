@@ -1,0 +1,76 @@
+<%- layout('/layouts/boilerplate.ejs') %>
+
+<script>
+    let data = <%- JSON.stringify(data) %>
+</script>
+
+            <div class="card" style="width: 18rem;">
+                <h4><%= data.title %></h4>
+            <img class="card-img-top" src="<%= data.image.url %>" alt="Card image cap">
+            <div class="card-body">
+                <p><i class="fa-solid fa-user" style="margin-right: 8px;"></i><b><%= data.owner.username %></b></p>
+              <p class="card-text">
+                <%= data.description %>
+            </p><br>
+                <div>
+                &#36;<%= data.price.toLocaleString() %> /Night
+                </div><br>
+                <div>
+                    <i class="fa-solid fa-location-dot"></i>
+                <%= data.location %>
+                <%= data.country %>
+                </div>
+            </div>
+
+           <% if(currUser && currUser._id.equals(data.owner._id)) { %>
+            <div class="d-flex gap-16">
+                <a href="/listings/<%= data._id %>/edit" class="btn edit-btn bg-danger text-light">Edit</a>
+            <form action="/listings/<%= data._id %>?_method=DELETE" method="POST">
+                <button class="btn bg-dark text-light">delete</button>
+            </form>
+            </div>
+         <% } %>
+
+            <form action="/listings/<%= data._id %>/review" method="get" style="margin: 16px 0px 0px -16px;">
+                <button class="btn review-btn btn-danger text-light">Leave a review</button>
+            </form>
+            <br><br><br><hr class="hr">
+
+
+            <% if(data.reviews.length !== 0) { %>
+            <h3>Reviews</h3>
+            <% } %>
+
+            <div class="reviews">
+                <% for(let review of data.reviews){ %>
+                    <div class="card reviews-card border rounded border-dark" style="width: 18rem;">
+                        <div class="card-body">
+                          <h5 class="card-title">@<%= review.owner.username %></h5>
+                          <p class="starability-result card-subtitle mb-2 text-muted" data-rating="<%= review.rating %>"></p>
+                          <p class="card-text"><%= review.comment %></p>
+                          <hr>
+                          <p class="card-text text-bold"><%= review.createdAt %></p>
+                        </div>
+
+                        <% if(currUser && currUser._id.equals(review.owner._id)) { %>
+                        <div style="display: flex;">
+                        <form action="/listings/<%= data._id %>/review/<%= review._id %>?_method=DELETE" method="post" style="margin-left: 1rem;">
+                            <button class="btn btn-danger text-white">Delete</button>
+                        </form>
+                        <form action="/listings/<%= data._id %>/review/<%= review._id %>" method="get" style="margin-left: 1rem;">
+                            <button class="btn btn-warning text-white">Edit</button>
+                        </form>
+                        </div>
+                        <% } %>
+
+                    </div>
+                <% } %>
+            </div>
+            <br />
+            <!-- Div where the map will be rendered -->
+             <div>
+                 <h3>Where You'll be</h3>
+                <div id="map"style="width: 600px; height:300px; margin-bottom:32px;border:2px solid lightgrey; border-radius:16px;box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);"></div>
+             </div>
+
+            

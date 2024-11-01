@@ -1,0 +1,56 @@
+<%- layout('/layouts/boilerplate.ejs') %>
+
+    <form action="/listings" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+        <h2>Post</h2>
+        <div>
+        <label for="title" class="form-label">Title</label>
+        <input type="text" name="title" placeholder="title" class="form-control" required>
+        <div class="valid-feedback">Title looks good.</div>
+        <div class="invalid-feedback">Title is required</div>
+    </div><br>
+    
+    <div>
+        <label for="description" class="form-label">Description</label>
+        <textarea name="description" placeholder="description" class="form-control" required></textarea>
+        <div class="valid-feedback">description looks good.</div>
+        <div class="invalid-feedback">description is required</div>
+    </div><br>
+    
+    <div>
+        <label for="image" class="form-label">Upload Image</label>
+        <input type="file" placeholder="image" name="image" class="form-control">
+        <div class="valid-feedback">looks good.</div>
+    </div><br>
+    
+    <div>
+        <label for="price" class="form-label col-4">Price USD</label>
+        <input type="number" name="price" placeholder="price" class="form-control" required>
+        <div class="valid-feedback">looks good.</div>
+        <div class="invalid-feedback">price should be added</div>
+    </div><br>
+    
+    <div>
+        <label for="country" class="form-label col-8">Country</label>
+        <input type="text" name="country" placeholder="country" class="form-control" required>
+        <div class="valid-feedback">looks good.</div>
+        <div class="invalid-feedback">please enter a valid country</div>
+    </div><br>
+    
+    <div>
+        <label for="location" class="form-label">Location</label>
+        <input type="text" name="location" placeholder="location" class="form-control" required>
+        <div class="valid-feedback">looks good.</div>
+        <div class="invalid-feedback">please enter a valid location</div>
+    </div><br>
+
+    <div>
+        <label for="category" class="form-label">Category</label>
+        <select name="category" id="category" class="form-select" aria-label="Default select example" required>
+            <% for(let i = 0; i < names.length; i++) { %>
+                <option value="<%= values[i] %>"><%= names[i] %></option>
+            <% } %>
+        </select>
+    </div><br>
+
+        <button class="btn bg-danger text-light">Add</button>
+    </form>

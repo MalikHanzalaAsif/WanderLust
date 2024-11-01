@@ -1,0 +1,72 @@
+<nav class="navbar navbar-expand-md" style="border-bottom: 2px solid lightgrey; padding-bottom: 16px;">
+  <div class="container-fluid">
+    <!-- Brand and Toggler -->
+    <a class="navbar-brand" href="/listings">
+      <i class="fa-regular fa-compass text-danger"></i>
+    </a>
+    <button
+      class="navbar-toggler collapsed"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- Navbar Links and User Profile Section -->
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <!-- Navbar Links -->
+      <div class="navbar-nav me-auto">
+        <a class="nav-link text-dark" href="/listings">Explore</a>
+        <% if(currUser) { %>
+          <a class="nav-link text-dark" href="/listings/user/<%= currUser._id %>">Airbnb your home</a>
+        <% } %>
+        <a class="nav-link text-dark" href="/listings/new">Post Listing</a>
+      </div>
+
+      <!-- Search Bar -->
+      <form class="d-flex" style="margin-left: 0rem;" action="/listings/search" method="get">
+        <input
+          class="form-control"
+          type="search"
+          placeholder="Search destinations"
+          aria-label="Search"
+          style="border-radius: 25px; padding-left: 60px; margin-right: 10px;"
+          name="location"
+        >
+        <button class="btn btn-danger" type="submit" style="border-radius: 25px;">
+          <i class="fa-solid fa-magnifying-glass"></i> Search
+        </button>
+      </form>
+
+      <!-- User Profile and Dropdown Section -->
+      <div class="profile-box d-flex align-items-center">
+        <% if(currUser) { %>
+          <p class="mb-0 text-dark fw-bold d-flex align-items-center">
+            <i class="fa-solid fa-user me-2 text-danger"></i><%= currUser.username %>
+          </p>
+        <% } %>
+        <div class="dropdown ms-3">
+          <i
+            class="fa-solid fa-ellipsis-vertical"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            style="font-size: 1.8rem; color: red; cursor: pointer"
+          ></i>
+          <ul class="dropdown-menu dropdown-menu-end" id="profileDropdown" style="border: 1px solid red; border-radius: 8px;">
+            <% if(!currUser) { %>
+              <li><a class="dropdown-item" href="/login" style="color: #333">Login</a></li>
+              <li><a class="dropdown-item" href="/signup" style="color: #333">Signup</a></li>
+            <% } %>
+            <% if(currUser) { %>
+              <li><a class="dropdown-item" href="/logout" style="color: #333">Logout</a></li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

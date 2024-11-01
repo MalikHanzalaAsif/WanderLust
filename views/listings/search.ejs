@@ -1,0 +1,176 @@
+<%- layout('/layouts/boilerplate.ejs') %>
+
+<style>
+    #filters{
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    .filter{
+      text-align: center;
+      margin-right: 2rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      opacity: 0.7;
+      margin-left: auto;
+    }
+    .filter:hover{
+      opacity: 1;
+      cursor: pointer;
+    }
+    .filter p{
+      font-size: 0.8rem;
+    }
+    .tax-toggle {
+      font-size: 0.9rem;
+      margin-right: 1rem;
+      margin-left: 2rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 0.7rem;
+      border-radius: 8px;
+      padding-bottom: 0;
+      height: 3rem;
+      margin-top: 1.2rem;
+    }
+    .custom-switch-red:checked {
+      background-color: red;
+      border-color: red;
+    }
+    .custom-switch-red {
+      transform: scale(1.5); /* Adjust scale as needed */
+      margin-left: 10px;
+      outline: none;
+    }
+    .custom-switch-red:focus {
+      outline: none; /* Removes the outline on focus */
+      box-shadow: none; /* Removes any box shadow */
+    }
+    .custom-label-red {
+      margin-left: 0.8rem;
+    }
+  </style>
+  
+      <div id="filters">
+  
+        <div class="filter">
+          <a href="/listings/category/trending" style="text-decoration: none; color: black;">
+            <div><i class="fa-solid fa-fire"></i></div>
+            <p>Trending</p>
+          </a>
+        </div>
+  
+        <div class="filter">
+          <a href="/listings/category/rooms" style="text-decoration: none; color: black;">
+            <div><i class="fa-solid fa-bed"></i></div>
+            <p>Rooms</p>
+          </a>
+        </div>
+  
+        <div class="filter">
+          <a href="/listings/category/iconicCities" style="text-decoration: none; color: black;">
+            <div><i class="fa-solid fa-city"></i></div>
+            <p>Iconic cities</p>
+          </a>
+        </div>
+  
+        <div class="filter">
+          <a href="/listings/category/mountains" style="text-decoration: none; color: black;">
+            <div><i class="fa-solid fa-mountain"></i></i></div>
+            <p>Mountains</p>
+          </a>
+        </div>
+  
+        <div class="filter">
+          <a href="/listings/category/castles" style="text-decoration: none; color: black;">
+            <div><i class="fa-brands fa-fort-awesome"></i></div>
+            <p>Castles</p>
+          </a>
+        </div>
+  
+        <div class="filter">
+          <a href="/listings/category/amazingPools" style="text-decoration: none; color: black;">
+            <div><i class="fa-solid fa-person-swimming"></i></div>
+            <p>Amazing pools</p>
+          </a>
+        </div>
+  
+        <div class="filter">
+          <a href="/listings/category/camping" style="text-decoration: none; color: black;">
+            <div><i class="fa-solid fa-campground"></i></div>
+            <p>Camping</p>
+          </a>
+        </div>
+  
+        <div class="filter">
+          <a href="/listings/category/farms" style="text-decoration: none; color: black;">
+            <div><i class="fa-solid fa-cow"></i></div>
+            <p>Farms</p>
+          </a>
+        </div>
+  
+        <div class="filter">
+          <a href="/listings/category/arctic" style="text-decoration: none; color: black;">
+            <div><i class="fa-solid fa-snowflake"></i></div>
+            <p>Arctic</p>
+          </a>
+        </div>
+        
+        <div class="filter">
+          <a href="/listings/category/beach" style="text-decoration: none; color: black;">
+            <div><i class="fa-solid fa-umbrella-beach"></i></div>
+            <p>Beach</p>
+          </a>
+        </div>
+  
+        <!-- toggle taxes -->
+        <div class="tax-toggle">
+          <div class="form-check form-switch d-flex align-items-center">
+            <input
+              type="checkbox"
+              class="form-check-input custom-switch-red"
+              id="customSwitch1"
+            />
+            <label
+              class="form-check-label me-2 custom-label-red"
+              for="customSwitch1"
+              >Display total after taxes!</label
+            >
+          </div>
+        </div>
+  
+      </div>
+  
+  
+      <div style="display: flex;">
+          <h1 style="margin-bottom: 2rem;"><%= query %></h1> 
+          <span style="margin-left: auto;"><%= listings.length %> Results found for "<%= query %>"</span>
+      </div>
+      <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-1 cards-container">
+          <% for(let listing of listings){ %>
+            <a href="/listings/<%= listing._id %>" class="img-link">
+              <div class="card col" style="width: 18rem;">
+                  <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing-Image">
+                  <div class="card-body">
+                    <p class="card-text"><%= listing.title %> <br />
+                      &#36;<%= listing.price.toLocaleString() %> /Night
+                      <i class="tax-info" style="font-style: italic; font-weight: bold; display: none;">&nbsp;+18% GST</i>
+                  </p>
+                  </div>
+                </div>
+                </a>
+          <% } %>
+      </div>
+  
+      <script>
+        document.querySelector('.custom-switch-red').addEventListener('change',function(){
+          let taxInfo = document.getElementsByClassName('tax-info');
+          for(let info of taxInfo){
+            if(info.style.display != 'inline'){
+              info.style.display = 'inline';
+            } else{
+              info.style.display = 'none';
+            }
+          }
+        })
+      </script>
